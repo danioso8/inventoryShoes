@@ -21,36 +21,61 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middlewares
+// Middlewares - CORS más permisivo
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:5175',
+  'https://disciplined-connection-production.up.railway.app',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
-// Configuración de CORS más permisiva
+// Configuración de CORS
 app.use(cors({
   origin: function (origin, callback) {
-    // Permitir requests sin origin (como mobile apps o curl)
+    console.log('Origin recibido:', origin);
+    
+    // Permitir requests sin origin (como mobile apps, curl o mismo servidor)
     if (!origin) return callback(null, true);
     
     // En desarrollo, permitir localhost
     if (origin.includes('localhost')) return callback(null, true);
     
-    // En producción, verificar allowedOrigins
+    // Permitir Railway frontend
+    if (origin.includes('railway.app')) return callback(null, true);
+    
+    // Verificar allowedOrigins
     if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      // Por ahora permitir todos los orígenes en producción
-      callback(null, true);
+      return callback(null, true);
     }
+    
+    // Permitir cualquier origen en producción (temporal)
+    console.log('Permitiendo origen no listado:', origin);
+    callback(null, true);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['Content-Range', 'X-Content-Range']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
+
+// Agregar headers adicionales de CORS manualmente
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Handle preflight
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

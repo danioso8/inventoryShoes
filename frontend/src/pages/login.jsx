@@ -43,7 +43,7 @@ function Login() {
             {/* Logo */}
             <div className="text-center mb-4">
               <h1 className="fw-black display-5" style={{fontFamily: 'Arial Black, sans-serif', letterSpacing: '2px'}}>
-                INVENTORY SHOES ONLINE
+                INVENTARIO DE ZAPATOS
               </h1>
             </div>
 
