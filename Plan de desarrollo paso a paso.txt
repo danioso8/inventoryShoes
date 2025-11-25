@@ -1,0 +1,25 @@
+Plan de Desarrollo Paso a Paso:
+Fase 1: Configuración Inicial
+Crear proyecto React con Vite
+Configurar Tailwind CSS
+Crear estructura de carpetas
+
+Fase 2: Backend Básico
+Configurar Node.js + Express
+Crear API REST básica
+Conectar base de datos
+
+Fase 3: Funcionalidades Core
+Sistema de autenticación
+CRUD de zapatos (crear, leer, actualizar, eliminar)
+Sistema de categorías y tallas
+Subida de imágenes
+
+Fase 4: Interfaces
+Dashboard administrativo
+Vista de inventario público
+Sistema de facturación
+
+Fase 5: Mejoras
+Búsquedas y filtros
+Reportes y estadísticas

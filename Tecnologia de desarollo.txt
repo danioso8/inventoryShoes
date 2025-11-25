@@ -1,0 +1,13 @@
+Stack Tecnológico Final:
+Frontend: React + Vite + Tailwind CSS
+Backend: Node.js + Express
+Base de Datos: MySQL o PostgreSQL
+Gestión de Imágenes: Cloudinary o almacenamiento local
+Estado: React Context API o Zustand
+
+
+✅ Frontend React con Vite
+✅ Backend Node.js/Express
+✅ Estructura de base de datos
+✅ Sistema de autenticación básico
+✅ Componentes principales (Dashboard, Inventario, Facturación)
