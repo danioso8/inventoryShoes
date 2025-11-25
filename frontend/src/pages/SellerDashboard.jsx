@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 import productService from "../services/productService";
+import invoiceService from "../services/invoiceService";
 
 function SellerDashboard() {
   const [user, setUser] = useState(null);
@@ -113,15 +114,71 @@ function SellerDashboard() {
     return cart.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (cart.length === 0) {
       alert("El carrito está vacío");
       return;
     }
+
+    // Solicitar datos del cliente
+    const clienteNombre = prompt("Nombre del cliente:");
+    if (!clienteNombre) return;
+
+    const clienteDocumento = prompt("Documento del cliente (opcional):");
+    const clienteTelefono = prompt("Teléfono del cliente (opcional):");
     
-    // TODO: Implementar creación de factura
-    console.log("Procesando venta:", cart);
-    alert("Función de facturación en desarrollo");
+    const metodoPago = prompt("Método de pago:\n1. Efectivo\n2. Tarjeta\n3. Transferencia\nIngrese el número:");
+    const metodosPago = {
+      '1': 'efectivo',
+      '2': 'tarjeta',
+      '3': 'transferencia'
+    };
+
+    if (!metodosPago[metodoPago]) {
+      alert("Método de pago inválido");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Preparar items de la factura
+      const items = cart.map(item => {
+        // Buscar el producto y variante para obtener el producto_talla_id
+        const producto = products.find(p => p.id === item.producto_id);
+        const variante = producto?.tallas?.find(v => 
+          v.talla === item.talla && v.color === item.color
+        );
+
+        return {
+          producto_id: item.producto_id,
+          producto_talla_id: variante?.id,
+          cantidad: item.cantidad,
+          precio_unitario: item.precio
+        };
+      });
+
+      const facturaData = {
+        cliente_nombre: clienteNombre,
+        cliente_documento: clienteDocumento || null,
+        cliente_telefono: clienteTelefono || null,
+        metodo_pago: metodosPago[metodoPago],
+        items
+      };
+
+      const response = await invoiceService.create(facturaData);
+      
+      if (response.success) {
+        alert(`✅ Factura creada exitosamente!\nTotal: $${calculateTotal().toLocaleString('es-CO')}`);
+        setCart([]);
+        setShowCart(false);
+        loadProducts(); // Recargar productos para actualizar stock
+      }
+    } catch (error) {
+      console.error("Error al crear factura:", error);
+      alert("Error al procesar la venta: " + (error.response?.data?.message || error.message));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

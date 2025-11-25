@@ -7,6 +7,7 @@ import paymentRoutes from './routes/payment.routes.js';
 import productRoutes from './routes/product.routes.js';
 import categoryRoutes from './routes/category.routes.js';
 import userRoutes from './routes/user.routes.js';
+import invoiceRoutes from './routes/invoice.routes.js';
 import pool from './config/database.js';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
@@ -64,6 +65,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/invoices', invoiceRoutes);
 
 // Manejo de errores
 app.use((err, req, res, next) => {

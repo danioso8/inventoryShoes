@@ -5,6 +5,8 @@ import Dashboard from './pages/dashboard';
 import SellerDashboard from './pages/SellerDashboard';
 import Products from './pages/Products';
 import Users from './pages/Users';
+import Invoices from './pages/Invoices';
+import Reports from './pages/Reports';
 import Pricing from './pages/pricing';
 import Checkout from './pages/checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
@@ -91,7 +93,7 @@ function App() {
           element={
             <PrivateRoute>
               <RoleProtectedRoute allowedRoles={['owner', 'admin']}>
-                <Dashboard />
+                <Invoices />
               </RoleProtectedRoute>
             </PrivateRoute>
           } 
@@ -101,7 +103,7 @@ function App() {
           element={
             <PrivateRoute>
               <RoleProtectedRoute allowedRoles={['owner', 'admin']}>
-                <Dashboard />
+                <Reports />
               </RoleProtectedRoute>
             </PrivateRoute>
           } 
