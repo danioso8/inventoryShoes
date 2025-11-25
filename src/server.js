@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes.js';
 import subscriptionRoutes from './routes/subscription.routes.js';
+import paymentRoutes from './routes/payment.routes.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Manejo de errores
 app.use((err, req, res, next) => {

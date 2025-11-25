@@ -3,6 +3,8 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import Pricing from './pages/pricing';
+import Checkout from './pages/checkout';
+import PaymentSuccess from './pages/PaymentSuccess';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 
@@ -14,6 +16,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route 
+          path="/checkout/:planId" 
+          element={
+            <PrivateRoute>
+              <Checkout />
+            </PrivateRoute>
+          } 
+        />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
         <Route 
           path="/dashboard" 
           element={

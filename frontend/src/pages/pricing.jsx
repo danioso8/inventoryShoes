@@ -91,9 +91,8 @@ function Pricing() {
       return;
     }
 
-    // Aquí integrarás el sistema de pago
-    alert(`Próximamente: Upgrade al plan ${planId.toUpperCase()}`);
-    // navigate(`/checkout/${planId}`);
+    // Redirigir al checkout
+    navigate(`/checkout/${planId}?periodo=mensual`);
   };
 
   return (
