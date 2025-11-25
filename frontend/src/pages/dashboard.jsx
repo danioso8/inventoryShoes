@@ -53,7 +53,21 @@ function Dashboard() {
               <h4 className="alert-heading">¡Bienvenido, {user?.nombre}! 🎉</h4>
               <p>Has iniciado sesión correctamente en tu tienda: <strong>{user?.tienda_nombre}</strong></p>
               <hr />
-              <p className="mb-0">Tienes <strong>3 meses gratis</strong> para probar todas las funcionalidades.</p>
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <p className="mb-0">
+                    Plan actual: <span className="badge bg-primary">{user?.plan?.toUpperCase()}</span>
+                    {' - '}
+                    Tienes <strong>3 meses gratis</strong> para probar todas las funcionalidades.
+                  </p>
+                </div>
+                <button 
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={() => navigate('/pricing')}
+                >
+                  Ver Planes
+                </button>
+              </div>
             </div>
           </div>
         </div>
