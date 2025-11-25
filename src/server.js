@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(cors({
-  origin: 'http://localhost:5173', // URL del frontend React
+  origin: ['http://localhost:5173', 'http://localhost:5174'], // URL del frontend React
   credentials: true
 }));
 app.use(express.json());
