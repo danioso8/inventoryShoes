@@ -2,11 +2,14 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
+import SellerDashboard from './pages/SellerDashboard';
 import Products from './pages/Products';
 import Pricing from './pages/pricing';
 import Checkout from './pages/checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PrivateRoute from './components/PrivateRoute';
+import RoleProtectedRoute from './components/RoleProtectedRoute';
+import DashboardRouter from './components/DashboardRouter';
 import './App.css';
 
 function App() {
@@ -26,12 +29,45 @@ function App() {
           } 
         />
         <Route path="/payment/success" element={<PaymentSuccess />} />
+        
+        {/* Ruta de dashboard que redirige según el rol */}
         <Route 
           path="/dashboard" 
           element={
             <PrivateRoute>
-              <Dashboard />
+              <DashboardRouter />
             </PrivateRoute>
+        {/* Rutas administrativas (solo owner y admin) */}
+        <Route 
+          path="/productos" 
+          element={
+            <PrivateRoute>
+              <RoleProtectedRoute allowedRoles={['owner', 'admin']}>
+                <Products />
+              </RoleProtectedRoute>
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/facturas" 
+          element={
+            <PrivateRoute>
+              <RoleProtectedRoute allowedRoles={['owner', 'admin']}>
+                <Dashboard />
+              </RoleProtectedRoute>
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/reportes" 
+          element={
+            <PrivateRoute>
+              <RoleProtectedRoute allowedRoles={['owner', 'admin']}>
+                <Dashboard />
+              </RoleProtectedRoute>
+            </PrivateRoute>
+          } 
+        />  </PrivateRoute>
           } 
         />
         <Route 
