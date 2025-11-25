@@ -1,9 +1,5 @@
-builder = "nixpacks"
-
 [build]
-  nixpacksConfigPath = "nixpacks.toml"
+  builder = "NIXPACKS"
 
 [deploy]
-  startCommand = "npx serve dist -l $PORT"
-  restartPolicyType = "ON_FAILURE"
-  restartPolicyMaxRetries = 10
+  startCommand = "npx serve dist -s -l $PORT"
